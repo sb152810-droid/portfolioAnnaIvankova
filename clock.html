@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+            color: white;
+        }
+        .clock {
+            font-size: 3em;
+            margin: 20px;
+        }
+        @media (max-width: 600px) {
+            .clock {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock"></div>
+    <script>
+        const timezones = {
+            "Ukraine": "Europe/Kiev",
+            "USA": "America/New_York",
+            "UK": "Europe/London",
+            "Japan": "Asia/Tokyo",
+            "Australia": "Australia/Sydney"
+        };
+
+        function updateClock() {
+            const timeDisplay = document.getElementById('clock');
+            const date = new Date();
+            let timeString = '';
+
+            Object.keys(timezones).forEach(zone => {
+                const timeInZone = new Date(date.toLocaleString('en-US', { timeZone: timezones[zone] }));
+                timeString += `\n${zone}: ${timeInZone.toLocaleTimeString()}`;
+            });
+
+            timeDisplay.innerText = timeString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
